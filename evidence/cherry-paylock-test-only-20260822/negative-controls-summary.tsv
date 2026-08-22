@@ -1,0 +1,6 @@
+test	expected_http	observed_http	result
+create_negative_intent	200	200	PASS
+duplicate_payment_intent	409	409	PASS
+invalid_receipt_missing	400	400	PASS
+tampered_receipt_mismatch	409	409	PASS
+unknown_h0_webhook	404	404	PASS

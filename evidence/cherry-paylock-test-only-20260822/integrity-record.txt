@@ -1,0 +1,18 @@
+Scope: redacted publication record; raw operational artifacts are retained separately and are deliberately excluded.
+
+Success/replay/cancellation package
+  remote run exit: 0
+  remote manifest SHA-256: 4f7892522fd8c656a5426169251dd2cf7e55e6c4a42cd4b011d54be63f57306b
+  remote sha256sum -c: passed
+  local sha256sum -c after secure collection: passed
+  remote/local SHA256SUMS digest comparison: exact match
+
+Negative-controls package
+  remote run exit: 0
+  remote manifest SHA-256: a30884c6d6068ace41ec444ce765b0bb1786e79c300e956a0d476b0af677e718
+  remote sha256sum -c: passed
+  local sha256sum -c after secure collection: passed
+  remote/local SHA256SUMS digest comparison: exact match
+
+Redaction rule
+  No H0/H1 values, URLs, request headers, API values, raw bodies, host addresses, or provider secrets are stored in this repository.
