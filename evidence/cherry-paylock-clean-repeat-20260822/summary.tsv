@@ -1,0 +1,9 @@
+test	expected_http	observed_http	result	interpretation
+health	200	200	PASS	Service health endpoint reachable from Cherry.
+session	200	200	PASS	New synthetic test-only payment intent created.
+payment	200	200	PASS	Matching synthetic receipt webhook accepted.
+provider_ack	200	200	PASS	Synthetic provider acknowledgement accepted.
+user_unlock	200	200	PASS	Test fixture reached EXECUTION_PROVEN and produced H1 in retained raw response.
+resolve	200	200	PASS	Resolved H1 matched unlock H1 semantically in retained raw evidence.
+unlock_replay	409	409	PASS	Second unlock was rejected for the same completed fixture.
+duplicate_intent	409	409	PASS	Second submission of the same synthetic payment intent was rejected.

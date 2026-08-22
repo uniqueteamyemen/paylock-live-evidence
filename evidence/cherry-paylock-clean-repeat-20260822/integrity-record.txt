@@ -1,0 +1,11 @@
+Record type: redacted integrity summary for a test-only PayLock clean repeat.
+Raw-bundle path: retained privately; operational path omitted from this publication.
+Raw-bundle SHA256SUMS hash: ac3dfc9778c0c8baa34e0b42a538469a70b36d4eee5ed254c06d8431fbf37e59
+Raw manifest entries: 1020
+Remote verification: 1020/1020 SHA-256 entries returned OK.
+Local verification: 1020/1020 SHA-256 entries returned OK.
+Runner exit: 0
+Source commit: e52d19864cf3b386ba3d27e6ba52d971a435a8db
+Runner SHA-256: b6698cf75b60e4ac3395829f0abb45ea3f622741cf9f51513b4973e2da02414e
+Raw H1 value: retained only in raw bundle; not published.
+Raw endpoint, headers, H0/H1 identifiers, and payloads: excluded intentionally.
