@@ -1,0 +1,14 @@
+== Cherry PayLock — test-only successful unlock completion ==
+
+Raw retained artifact (not published): remote/http/user_unlock.body
+Raw artifact SHA-256: 3a349a882a50444ee0b9bf5831a4fda91944d49acffbc8d7575b5bb6a6600df5
+Raw artifact byte count: 199
+
+Safe field-presence review of the retained response:
+- H1 field: present
+- UNLOCKED status token: present
+- EXECUTION_PROVEN token: present
+
+Classification: verified Core lifecycle completion for a synthetic fixture.
+Boundary: this is not payment settlement, signed-provider confirmation,
+digital-resource delivery, or client-consumption evidence.

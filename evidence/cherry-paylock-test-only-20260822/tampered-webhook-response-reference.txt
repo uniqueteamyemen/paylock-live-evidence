@@ -1,0 +1,10 @@
+Modified-webhook response-body reference — test-only fixture
+
+Raw retained artifact (not published): remote/http/tampered_webhook_signature.body
+Raw artifact SHA-256: e3a52059ed5b19f2849dcf2702103fa4783d324b615f04d4f8a770fe9b2d5f2c
+Raw artifact byte count: 83
+
+The runner recorded HTTP 200 for a matching synthetic receipt carrying a
+test-only invalid provider_signature field. The raw body remains retained
+outside this redacted publication record. This establishes acceptance of the
+tested input; it does not establish provider-origin or signature validation.

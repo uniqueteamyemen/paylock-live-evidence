@@ -27,3 +27,8 @@ Modified-webhook control
   recovered remote/local manifest digest comparison: exact match
   observed test-only invalid-signature-field disposition: HTTP 200 accepted
   redacted execution capture SHA-256: f843befceacaea7c717864cc58e16ee86588d8a102fdccc402fe412045030785
+  retained raw modified-webhook response SHA-256: e3a52059ed5b19f2849dcf2702103fa4783d324b615f04d4f8a770fe9b2d5f2c
+
+Success-completion response reference
+  retained raw unlock response SHA-256: 3a349a882a50444ee0b9bf5831a4fda91944d49acffbc8d7575b5bb6a6600df5
+  raw response review: H1, UNLOCKED, and EXECUTION_PROVEN fields/tokens present
