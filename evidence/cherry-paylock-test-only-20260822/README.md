@@ -36,7 +36,7 @@ The first run exercised the success sequence, replay controls, and cancellation 
 | Negative receipt controls | Same service contract; runner separately hashed | 0 | `a30884c6d6068ace41ec444ce765b0bb1786e79c300e956a0d476b0af677e718` | Passed; manifest digest matched byte-for-byte after secure collection. |
 | Modified-webhook control | Same live service contract; test-only runner | 0 recorded for the request lifecycle; shell completed `123` after the requests because its SHA-256 inventory used a relative-path defect | `ac8dd7cac097df29235794312e83b544534618680144886f38adac4824841f4e` (recovered inventory) | Passed after one read-only recovery; remote/local recovered-manifest digest matched. No request was replayed. |
 
-The normalized request outcomes are in [`success-summary.tsv`](success-summary.tsv), [`negative-controls-summary.tsv`](negative-controls-summary.tsv), and [`tampered-webhook-control.tsv`](tampered-webhook-control.tsv). The raw manifests and raw files are not committed because they contain operational identifiers and unredacted evidence.
+The normalized request outcomes are in [`success-summary.tsv`](success-summary.tsv), [`negative-controls-summary.tsv`](negative-controls-summary.tsv), and [`tampered-webhook-control.tsv`](tampered-webhook-control.tsv). A deterministic, redacted terminal capture of the modified-webhook result is retained at [`captures/tampered-webhook-control.png`](captures/tampered-webhook-control.png); it is a companion to the raw retained record and does not introduce new evidence. The raw manifests and raw files are not committed because they contain operational identifiers and unredacted evidence.
 
 ## Evidence provenance and integrity
 

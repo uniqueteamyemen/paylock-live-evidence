@@ -26,3 +26,4 @@ Modified-webhook control
   local sha256sum -c after secure collection: passed
   recovered remote/local manifest digest comparison: exact match
   observed test-only invalid-signature-field disposition: HTTP 200 accepted
+  redacted execution capture SHA-256: f843befceacaea7c717864cc58e16ee86588d8a102fdccc402fe412045030785
