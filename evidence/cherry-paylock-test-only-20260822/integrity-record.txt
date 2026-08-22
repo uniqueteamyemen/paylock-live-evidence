@@ -16,3 +16,13 @@ Negative-controls package
 
 Redaction rule
   No H0/H1 values, URLs, request headers, API values, raw bodies, host addresses, or provider secrets are stored in this repository.
+
+Modified-webhook control
+  test request lifecycle recorded exit: 0
+  outer runner shell exit: 123 after test requests because the initial inventory used paths relative to the wrong directory
+  recovery: one read-only remote inventory rebuild; no request was replayed
+  recovered remote manifest SHA-256: ac8dd7cac097df29235794312e83b544534618680144886f38adac4824841f4e
+  recovered remote sha256sum -c: passed
+  local sha256sum -c after secure collection: passed
+  recovered remote/local manifest digest comparison: exact match
+  observed test-only invalid-signature-field disposition: HTTP 200 accepted

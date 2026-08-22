@@ -1,0 +1,2 @@
+test	observed_http	classification
+tampered_webhook_signature	200	ACCEPTED_SIGNATURE_NOT_VALIDATED_BY_THIS_ENDPOINT

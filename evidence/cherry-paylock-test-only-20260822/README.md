@@ -21,6 +21,7 @@ The exercise demonstrated the **Core lifecycle semantics** listed below. It did 
 | Cancellation closure | **Verified (Core semantics)** | Cancellation receipt returned 200; later unlock and resolve attempts both returned 409. | Test fixture only. |
 | Missing receipt rejection | **Verified (schema-level)** | Missing `receipt_id` returned 400. | Does not prove cryptographic receipt validation. |
 | Receipt mismatch rejection | **Verified (frozen-intent binding)** | Different test receipt for the frozen test intent returned 409. | This is a mismatch control, not signed-webhook tamper verification. |
+| Modified webhook signature field | **Contradicted for signature-validation claim** | A matching synthetic receipt with the test-only value `TEST_ONLY_INVALID_SIGNATURE` in a `provider_signature` field returned 200. | The endpoint accepted this synthetic request; this run therefore does not support any claim that webhook origin or signature is validated here. |
 | Unknown reference rejection | **Verified** | A test webhook for a nonexistent reference returned 404. | Does not prove origin authentication. |
 
 > **Do not interpret this run as payment processing, provider integration, or proof of digital-resource delivery.** It proves bounded Core behaviour under synthetic inputs and shows which production-facing arrows remain unproven.
@@ -33,12 +34,13 @@ The first run exercised the success sequence, replay controls, and cancellation 
 | --- | --- | ---: | --- | --- |
 | Success, replay, cancellation | [`e52d19864cf3b386ba3d27e6ba52d971a435a8db`](https://github.com/uniqueteamyemen/paylock-core/commit/e52d19864cf3b386ba3d27e6ba52d971a435a8db) | 0 | `4f7892522fd8c656a5426169251dd2cf7e55e6c4a42cd4b011d54be63f57306b` | Passed; manifest digest matched byte-for-byte after secure collection. |
 | Negative receipt controls | Same service contract; runner separately hashed | 0 | `a30884c6d6068ace41ec444ce765b0bb1786e79c300e956a0d476b0af677e718` | Passed; manifest digest matched byte-for-byte after secure collection. |
+| Modified-webhook control | Same live service contract; test-only runner | 0 recorded for the request lifecycle; shell completed `123` after the requests because its SHA-256 inventory used a relative-path defect | `ac8dd7cac097df29235794312e83b544534618680144886f38adac4824841f4e` (recovered inventory) | Passed after one read-only recovery; remote/local recovered-manifest digest matched. No request was replayed. |
 
-The normalized request outcomes are in [`success-summary.tsv`](success-summary.tsv) and [`negative-controls-summary.tsv`](negative-controls-summary.tsv). The raw manifests and raw files are not committed because they contain operational identifiers and unredacted evidence.
+The normalized request outcomes are in [`success-summary.tsv`](success-summary.tsv), [`negative-controls-summary.tsv`](negative-controls-summary.tsv), and [`tampered-webhook-control.tsv`](tampered-webhook-control.tsv). The raw manifests and raw files are not committed because they contain operational identifiers and unredacted evidence.
 
 ## Evidence provenance and integrity
 
-The source and environment records retained privately contain the exact runner command, host identity, OS/kernel, tool versions, source clone record, original input templates, HTTP headers/bodies, runner stdout/stderr, exit record, and SHA-256 inventory. The collection protocol rebuilt a fresh SHA-256 inventory on Cherry from inside each evidence directory, verified every listed file remotely, securely copied the directory, verified every listed file locally, and compared the `SHA256SUMS` digest returned by Cherry with the locally calculated digest.
+The source and environment records retained privately contain the exact runner command, host identity, OS/kernel, tool versions, source clone record where applicable, original input templates, HTTP headers/bodies, runner stdout/stderr, exit record, and SHA-256 inventory. The collection protocol rebuilt a fresh SHA-256 inventory on Cherry from inside each evidence directory, verified every listed file remotely, securely copied the directory, verified every listed file locally, and compared the manifest digest returned by Cherry with the locally calculated digest. The modified-webhook runner had a post-request manifest-path defect; its raw initial inventory is retained, and its stable completed artifacts were then re-inventoried once without replaying the test request.
 
 The manifest SHA-256 values above identify the exact raw inventory used in that comparison. They are integrity locators, not a substitute for the original files and do not expose live protocol identifiers.
 
