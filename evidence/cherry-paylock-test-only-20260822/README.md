@@ -2,29 +2,29 @@
 
 ## Claim and execution boundary
 
-This package records a narrow runtime exercise against the existing PayLock service using synthetic test fixtures. The tested core sequence was:
+This package records a narrow runtime exercise against the existing PayLock service using synthetic test fixtures. The tested lifecycle sequence was:
 
 ```text
-test payment intent → simulated receipt → test webhook/provider acknowledgement
+test payment intent → simulated receipt → optional informational test webhook/provider acknowledgement
 → PayLock verification → test user unlock → exactly one H1-bearing response
 ```
 
-The exercise demonstrated the **Core lifecycle semantics** listed below. It did **not** invoke a payment processor, prove a real payment, prove a signed external provider event, prove delivery of a digital resource, prove client consumption, or change any deployment or configuration. Raw H0/H1 values, service address, headers, and request/response bodies remain outside this repository.
+The exercise demonstrated the **Core lifecycle semantics** listed below. In the clarified PayLock model, the webhook is optional informational intake only: it is not a transfer mechanism, a payment-authorization mechanism, or a core-unlock gate. The exercise did **not** invoke a payment processor, prove a real payment, prove delivery of a digital resource, prove client consumption, or change any deployment or configuration. Raw H0/H1 values, service address, headers, and request/response bodies remain outside this repository.
 
 | Chain element | Classification | Direct retained evidence | Boundary |
 | --- | --- | --- | --- |
 | Test intent / H0 creation | **Verified** | `success-summary.tsv`: `session_success` returned 200; the raw retained response contained an H0. | Synthetic fixture only; no commercial purchase. |
 | Simulated receipt acceptance | **Verified (test receipt only)** | `payment_attestation` returned 200. | This does not validate a payment processor, payment authenticity, or funds settlement. |
-| `provider_ack` input | **Partial** | `provider_ack` and its replay both returned 200. | The request was a harness-generated test call, not a signed external provider delivery. No provider identity, event semantics, or signature validation is demonstrated. |
+| Optional `provider_ack` / webhook intake | **Observed (informational only)** | `provider_ack` and its replay both returned 200. | The request was a harness-generated optional information call, not a signed external provider delivery. It is neither payment transfer nor payment authorization nor a prerequisite for the core unlock path. |
 | Test user unlock | **Verified (Core semantics)** | `user_unlock` returned 200; the redacted raw response included status `UNLOCKED`, an H1 field, and `EXECUTION_PROVEN`. | This is not proof that a customer received or consumed bytes. |
 | One effective H1 path | **Verified (Core semantics)** | First unlock returned 200; `unlock_replay` and duplicate receipt returned 409. | No concurrent-race test or external access-gate delivery proof was in this run. |
 | Cancellation closure | **Verified (Core semantics)** | Cancellation receipt returned 200; later unlock and resolve attempts both returned 409. | Test fixture only. |
 | Missing receipt rejection | **Verified (schema-level)** | Missing `receipt_id` returned 400. | Does not prove cryptographic receipt validation. |
 | Receipt mismatch rejection | **Verified (frozen-intent binding)** | Different test receipt for the frozen test intent returned 409. | This is a mismatch control, not signed-webhook tamper verification. |
-| Modified webhook signature field | **Contradicted for signature-validation claim** | A matching synthetic receipt with the test-only value `TEST_ONLY_INVALID_SIGNATURE` in a `provider_signature` field returned 200. | The endpoint accepted this synthetic request; this run therefore does not support any claim that webhook origin or signature is validated here. |
+| Modified optional-webhook signature field | **Signature validation not demonstrated** | A matching synthetic receipt with the test-only value `TEST_ONLY_INVALID_SIGNATURE` in a `provider_signature` field returned 200. | The endpoint accepted this synthetic informational request. This run therefore does not support a claim that this optional endpoint validates webhook origin or signature; it does not block the independently exercised core payment-simulation and unlock lifecycle. |
 | Unknown reference rejection | **Verified** | A test webhook for a nonexistent reference returned 404. | Does not prove origin authentication. |
 
-> **Do not interpret this run as payment processing, provider integration, or proof of digital-resource delivery.** It proves bounded Core behaviour under synthetic inputs and shows which production-facing arrows remain unproven.
+> **Do not interpret this run as payment processing, proof of a real provider integration, or proof of digital-resource delivery.** It proves bounded Core behaviour under synthetic inputs. The optional information webhook control is a separate observation and does not determine the core payment-simulation or unlock result.
 
 ## Result tables
 
@@ -46,4 +46,4 @@ The manifest SHA-256 values above identify the exact raw inventory used in that 
 
 ## Smallest evidence-producing next action
 
-The next meaningful step is an **Adapter-only experimental branch** with a signed, resource-ready provider event, opaque private state, an atomic one-time resource ticket, and a first-use/replay/concurrency test. A payment event alone must not be treated as proof that a named digital resource is ready.
+The next meaningful step, if an external signed-provider adapter is later introduced, is an **Adapter-only experimental branch** with a signed, resource-ready provider event, opaque private state, an atomic one-time resource ticket, and a first-use/replay/concurrency test. That is a separate integration-hardening campaign, not a condition for the already exercised core lifecycle or for the optional informational webhook.
