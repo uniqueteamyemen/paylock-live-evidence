@@ -1,0 +1,36 @@
+Cross-run normalized comparison record
+=======================================
+
+Scope
+-----
+This record compares the initial Cherry test-only PayLock success lifecycle with
+the independent clean fixture-E lifecycle. It is a comparison of retained,
+redacted status/disposition summaries only.
+
+Normalization rules
+-------------------
+1. H0/session identifiers, H1/proof values, receipt identifiers, and timestamps
+   are excluded as per-run generated values.
+2. An H1 is evaluated within each retained raw run only for presence at unlock
+   and semantic equality between unlock and resolve. It is not expected or
+   asserted to equal the H1 from another fixture.
+3. The compared value is the lifecycle disposition: HTTP status plus the
+   documented state meaning for each normalized step.
+4. The initial cancellation branch was not deliberately re-run in fixture E;
+   it is listed as out of comparison scope rather than inferred.
+
+Result
+------
+All eight overlapping normalized lifecycle steps are equivalent: 200 for the
+permitted health/session/payment/provider_ack/unlock/resolve stages and 409 for
+the completed-fixture unlock replay and duplicate test payment intent. The
+comparison does not establish a payment-processor integration, authenticated
+provider-webhook origin or signature validation, delivery/fulfillment, money
+movement, or production commercial readiness.
+
+Source records
+--------------
+- ../cherry-paylock-test-only-20260822/success-summary.tsv (initial lifecycle)
+- ./summary.tsv (independent fixture-E lifecycle)
+- Retained private raw evidence for each run, referenced only by its private
+  integrity records; raw identifiers and timestamps are intentionally omitted.

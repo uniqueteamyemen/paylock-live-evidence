@@ -9,3 +9,6 @@ Source commit: e52d19864cf3b386ba3d27e6ba52d971a435a8db
 Runner SHA-256: b6698cf75b60e4ac3395829f0abb45ea3f622741cf9f51513b4973e2da02414e
 Raw H1 value: retained only in raw bundle; not published.
 Raw endpoint, headers, H0/H1 identifiers, and payloads: excluded intentionally.
+Cross-run normalized comparison: cross-run-normalized-comparison.tsv.
+Cross-run normalization/integrity summary: cross-run-integrity-summary.txt.
+Both comparison files exclude generated identifiers, timestamps, endpoints, headers, and payloads.

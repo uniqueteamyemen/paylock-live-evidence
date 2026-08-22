@@ -1,0 +1,11 @@
+normalized_lifecycle_step	initial_run_observed_http	fixture_e_observed_http	initial_run_disposition	fixture_e_disposition	comparison
+health	200	200	PASS	PASS	EQUIVALENT
+create_test_payment_intent	200	200	PASS	PASS	EQUIVALENT
+matching_test_receipt_webhook	200	200	PASS	PASS	EQUIVALENT
+provider_ack	200	200	PASS	PASS	EQUIVALENT
+user_unlock	200	200	PASS	PASS	EQUIVALENT
+resolve_idempotent	200	200	PASS	PASS	EQUIVALENT
+unlock_replay	409	409	PASS	PASS	EQUIVALENT
+duplicate_test_payment_intent	409	409	PASS	PASS	EQUIVALENT
+test_payment_cancellation	200	N/A	PASS	NOT_RUN_IN_REPEAT	OUT_OF_COMPARISON_SCOPE
+unlock_or_resolve_after_cancellation	409	N/A	PASS	NOT_RUN_IN_REPEAT	OUT_OF_COMPARISON_SCOPE
